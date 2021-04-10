@@ -1,0 +1,5 @@
+div.app{
+  background: linear-gradient(to bottom, #222838 60%, white 0%);
+  height: 100vh;
+  width: 100vw;
+}
