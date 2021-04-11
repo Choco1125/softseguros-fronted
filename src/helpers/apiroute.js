@@ -1,2 +1,2 @@
-const route = "https://softseguros-backend.herokuapp.com"
+const route = "https://softseguros-backend.herokuapp.com/api/clients"
 export default route;
