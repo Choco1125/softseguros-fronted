@@ -2,20 +2,36 @@ import { useEffect, useState } from 'react';
 import './gradien.css';
 import { Link } from 'react-router-dom'
 import CardClient from './../components/CardClient';
-
+import ModalDelete from './../components/ModalDelete';
+import route from './../helpers/apiroute';
 
 function List() {
 
   const [clients, setClients] = useState([]);
+  const [currentDocument, setCurrentDocument] = useState('');
+  const [update, setUpdate] = useState(false)
+
+  const handleDocument = (document) => {
+    setCurrentDocument(document);
+  }
+
+  const willUpdate = () => {
+    setUpdate(!update);
+  }
 
   useEffect(() => {
     async function getClients() {
-      const res = await fetch('http://localhost:3100/api/clients');
+      const res = await fetch(route);
       const data = await res.json();
-      setClients(data);
+      console.log(data);
+      if (res.status === 200) {
+        setClients(data);
+      } else {
+        setClients([]);
+      }
     }
     getClients();
-  }, [])
+  }, [update]);
 
   return (
     <div className="app">
@@ -35,11 +51,22 @@ function List() {
           </div>
           {
             clients.map(client => (
-              <CardClient {...client} />
+              <CardClient
+                document={client.document}
+                fullname={client.fullname}
+                birthdate={client.birthdate}
+                created_at={client.created_at}
+                email={client.email}
+                handleDocument={handleDocument}
+              />
             ))
           }
         </div>
       </div>
+      <ModalDelete
+        document={currentDocument}
+        willUpdate={willUpdate}
+      />
     </div>
   )
 }

@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import api from './../helpers/apiroute';
 
 function FormClient({ isCreate }) {
   const history = useHistory()
@@ -15,9 +16,12 @@ function FormClient({ isCreate }) {
   useEffect(() => {
     if (!isCreate) {
       async function getClient() {
-        const res = await fetch('http://localhost:3100/api/clients/' + document);
+        const res = await fetch(`${api}/${document}`);
         const data = await res.json();
+        data[0].birthdate = data[0].birthdate.split('T')[0];
+        data[0].created_at = data[0].created_at.split('T')[0];
         setClient(data[0]);
+
       }
       getClient();
     }
@@ -32,7 +36,7 @@ function FormClient({ isCreate }) {
 
   const saveClient = async () => {
     let method = isCreate ? "POST" : "PUT";
-    let route = isCreate ? 'http://localhost:3100/api/clients' : `http://localhost:3100/api/clients/${document}`
+    let route = isCreate ? `${api}` : `${api}/${document}`
 
     const res = await fetch(route, {
       headers: {
@@ -43,7 +47,9 @@ function FormClient({ isCreate }) {
       body: JSON.stringify(client)
     });
     const data = await res.json();
-    console.log(data);
+    if (res.status === 200 || res.status === 201) {
+      history.push('/client/list');
+    }
   }
 
   const comeBack = () => {
