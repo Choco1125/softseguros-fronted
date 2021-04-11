@@ -1,6 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
-function CardClient({ fullname, created_at, email, birthdate }) {
+function CardClient({ document, fullname, created_at, email, birthdate }) {
   return (
     <div>
       <div className="card col-12 my-2 border-0 border-bottom col-md-11 mx-auto">
@@ -15,9 +16,9 @@ function CardClient({ fullname, created_at, email, birthdate }) {
               <button className="btn btn-btn-sm btn-danger">
                 <i class="bi bi-trash"></i>
               </button>
-              <button className="btn btn-btn-sm btn-primary">
+              <Link to={`/client/edit/${document}`} className="btn btn-btn-sm btn-primary">
                 <i class="bi bi-pencil"></i>
-              </button>
+              </Link>
             </span>
           </div>
         </div>
