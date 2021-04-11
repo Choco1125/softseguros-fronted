@@ -6,7 +6,6 @@ function ModalDelete({ document, willUpdate }) {
     const res = await fetch(`${route}/${document}`, {
       method: 'DELETE'
     });
-    const data = await res.json();
     if (res.status === 200) {
       willUpdate();
     }
