@@ -25,7 +25,7 @@ function FormClient({ isCreate }) {
       }
       getClient();
     }
-  }, []);
+  }, [isCreate, document]);
 
   const handleChange = e => {
     setClient({
@@ -46,7 +46,7 @@ function FormClient({ isCreate }) {
       method,
       body: JSON.stringify(client)
     });
-    const data = await res.json();
+    // const data = await res.json();
     if (res.status === 200 || res.status === 201) {
       history.push('/client/list');
     }
